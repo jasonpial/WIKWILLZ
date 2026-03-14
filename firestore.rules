@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: bookings
+    // Fields:
+    //   - clientName: string (required)
+    //   - email: string (required, email format)
+    //   - phone: string (optional)
+    //   - eventType: string (required)
+    //   - eventDate: string (required, date-time)
+    //   - planId: string (required)
+    //   - depositAmount: number (optional)
+    //   - status: string (required, enum)
+    //   - createdAt: string (required, date-time)
+    //   - uid: string (optional)
+    //
+    // Collection: gallery
+    // Fields:
+    //   - imageUrl: string (required)
+    //   - title: string (required)
+    //   - description: string (optional)
+    //   - category: string (optional)
+    //   - createdAt: string (required, date-time)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         request.auth.token.email == "jumadavidpius@gmail.com");
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidBooking(data) {
+      return data.keys().hasAll(['clientName', 'email', 'eventType', 'eventDate', 'planId', 'status', 'createdAt']) &&
+             data.clientName is string && data.clientName.size() > 0 && data.clientName.size() < 100 &&
+             isValidEmail(data.email) &&
+             data.eventType is string &&
+             data.planId is string &&
+             data.status in ['pending', 'confirmed', 'completed', 'cancelled'] &&
+             data.createdAt is string;
+    }
+
+    // Rules
+    match /bookings/{bookingId} {
+      // Clients can create bookings (even if not logged in for simplicity, or we can require auth)
+      // Let's require auth for better security if we want to track them
+      allow create: if isValidBooking(request.resource.data);
+      
+      // Only the owner or admin can read their booking
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.uid == request.auth.uid);
+      
+      // Only admin can update or delete
+      allow update, delete: if isAdmin();
+    }
+
+    match /gallery/{itemId} {
+      // Anyone can read the gallery
+      allow read: if true;
+      
+      // Only admin can manage the gallery
+      allow write: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow write: if isAdmin();
+    }
+  }
+}

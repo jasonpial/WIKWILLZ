@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "Booking": {
+      "title": "Booking",
+      "description": "A client booking for sound production services",
+      "type": "object",
+      "properties": {
+        "clientName": { "type": "string", "description": "Name of the client" },
+        "email": { "type": "string", "format": "email", "description": "Email of the client" },
+        "phone": { "type": "string", "description": "Phone number of the client" },
+        "eventType": { "type": "string", "description": "Type of event (e.g., Wedding, Corporate, Concert)" },
+        "eventDate": { "type": "string", "format": "date-time", "description": "Date and time of the event" },
+        "planId": { "type": "string", "description": "ID of the selected payment plan" },
+        "depositAmount": { "type": "number", "description": "Amount paid as deposit" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"], "description": "Status of the booking" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the booking was made" },
+        "uid": { "type": "string", "description": "User ID of the client if logged in" }
+      },
+      "required": ["clientName", "email", "eventType", "eventDate", "planId", "status", "createdAt"]
+    },
+    "GalleryItem": {
+      "title": "Gallery Item",
+      "description": "An item in the event gallery",
+      "type": "object",
+      "properties": {
+        "imageUrl": { "type": "string", "description": "URL of the image" },
+        "title": { "type": "string", "description": "Title of the event" },
+        "description": { "type": "string", "description": "Description of the event" },
+        "category": { "type": "string", "description": "Category of the event" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the item was added" }
+      },
+      "required": ["imageUrl", "title", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Collection of service bookings"
+    },
+    "/gallery/{itemId}": {
+      "schema": "GalleryItem",
+      "description": "Collection of gallery items"
+    }
+  }
+}

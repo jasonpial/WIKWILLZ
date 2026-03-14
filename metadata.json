@@ -1,0 +1,7 @@
+{
+  "name": "WIKWILZ PRODUCTION",
+  "description": "Professional sound production company in Uganda, specializing in events and functions. Founded by William Wasswa Kibalama.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

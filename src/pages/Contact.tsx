@@ -33,8 +33,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Call Us</h3>
-                  <p className="text-gray-400">+256 772 123 456</p>
-                  <p className="text-gray-400">+256 701 987 654</p>
+                  <p className="text-gray-400">+256 789 248 867</p>
+                  <p className="text-gray-400">+256 700 686 427</p>
                 </div>
               </div>
 
@@ -44,7 +44,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-1">Email Us</h3>
-                  <p className="text-gray-400">info@wikwilzproduction.com</p>
+                  <p className="text-gray-400">wasswawilliam48@gmail.com</p>
                   <p className="text-gray-400">bookings@wikwilzproduction.com</p>
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function Contact() {
                 <div>
                   <h3 className="text-xl font-bold mb-1">Visit Us</h3>
                   <p className="text-gray-400">Kampala Makindye Lusaka</p>
-                  <p className="text-gray-400">P.O. Box 1234, Kampala, Uganda</p>
+                  <p className="text-gray-400">P.O. Box 3940, Kampala, Uganda</p>
                 </div>
               </div>
             </div>

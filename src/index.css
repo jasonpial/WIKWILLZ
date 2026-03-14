@@ -4,9 +4,9 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
-     --color-gold: #9C7A2F;
-  --color-gold-light: #C9A646;
-  --color-gold-dark: #6E541F;
+     --color-gold: #B8860B;
+--color-gold-light: #D4AF37;
+--color-gold-dark: #8B6F1B;
 }
 
 @layer base {
